@@ -10,10 +10,12 @@ object Scaffolding {
 //  private val RIDERS_PATH: String = s"file://${System.getProperty("user.dir")}/duocar/raw/riders"
 
   def main(args:Array[String]): Unit = {
+    println(">> Creating session")
     val spark: SparkSession = SparkSession.builder
                                           .appName("SimpleApp")
                                           .config("spark.master", "local")
                                           .getOrCreate
+    println(">> Changing memory parameters")
     spark.conf.set("spark.testing.memory", 2147480000)
     //                                     268435456
     spark.conf.set("spark.driver.memory",  471859200)
