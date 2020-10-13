@@ -14,8 +14,8 @@ object Scaffolding {
     val spark: SparkSession = SparkSession.builder
                                           .appName("SimpleApp")
                                           .config("spark.master", "local")
-                                          .config("spark.driver.memory",  471859200)
-//                                          .config("spark.testing.memory", 2147480000)
+                                          .config("spark.driver.memory",  "471859200")
+                                          .config("spark.testing.memory", "2147480000")
                                           .getOrCreate
 
     val rides: Dataset[Row] = spark.read
