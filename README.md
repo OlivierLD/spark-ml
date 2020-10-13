@@ -1,14 +1,31 @@
 # spark-ml
 Spark examples, Java, Scala, Python, and Jupyter Notebooks
 
+## In this project
+You will find here:
+- A `Dockerfile` allowing you to build and run a docker image containing
+    - A runnable instance Spark-Hadoop-Hive
+    - Python 3
+    - Java
+    - Scala
+    - Jupyter notebooks server (for Python3, Java, Scala)
+    - This project
+- All the resources of this project will be runnable in the docker image built above.     
+
 ## Cloudera - Spark class, Oct-2020
 The goal is to reproduce what was done during the Cloudera class I took in Oct-2020, without Cloudera Data Science Workbench (CDSW).
 
-The docker image we will need can be built as indicated at <https://github.com/OlivierLD/raspberry-coffee/tree/master/docker>.
-Use `./image.builder.sh`, option `9`.
-Start it as indicated in `https://github.com/OlivierLD/raspberry-coffee/tree/master/docker/misc`.
+The docker image we will need can be built as indicated above.
+The script `build.image.sh` will do the job.
 
-#### Transfer the data to the docker image
+Once built, run a new container:
+```
+$ docker run -it --rm -e USER=root -p 8080:8080 oliv-spark:latest /bin/bash
+``` 
+The port (`-p 8080:8080`) is for Jupyter.
+
+#### To transfer extra data to the docker image
+If needed:
 ```
 $ docker ps
 CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS                    NAMES
@@ -24,6 +41,10 @@ $ cd spark-3.0.1-bin-hadoop2.7-hive1.2
 $ unzip ai-data.zip
 . . .
 ```
+
+## Basic validations
+In the docker container, do the following:
+
 #### In Python3
 ```
 $ ./bin/pyspark
@@ -122,6 +143,22 @@ root
 
 scala> 
 ```
+#### Java & Scala from the command line
+Along the same lines, you can do, from the `spark-ml` directory:
+```
+$ ./gradlew shadowJar
+$ java -cp build/libs/spark-ml-1.0-all.jar javasamples.Scaffolding
+. . .
+
+$ scala -cp build/libs/spark-ml-1.0-all.jar scalasamples.Scaffolding
+. . .
+```
 
 Good!
+ 
+## Other resources and docs
+- [JUPYTER.md](./JUPYTER.md)
+- [SPARK_DEBIAN.md](./SPARK_DEBIAN.md)
+
+---
  

@@ -85,8 +85,6 @@ RUN rm -f coursier
 #
 # To start: jupyter notebook --ip=0.0.0.0 --port=8080 --allow-root --no-browser
 #
-# TODO Copy projects, classes, notebooks and resources?
-#
 RUN echo "alias ll='ls -lisah'" >> $HOME/.bashrc
 RUN echo "banner Spark" >> $HOME/.bashrc
 RUN echo "git --version" >> $HOME/.bashrc
@@ -104,8 +102,8 @@ RUN echo "echo -------------------------" >> $HOME/.bashrc
 #
 RUN echo "To run it, use 'docker run -it --rm -e USER=root -p 8080:8080 oliv-spark:latest /bin/bash'"
 
-# RUN git clone https://github.com/OlivierLD/node.pi.git
-# WORKDIR /workdir/node.pi
+RUN git clone https://github.com/OlivierLD/spark-ml.git
+# WORKDIR /workdir/spark-ml
 # RUN npm install
 # RUN npm install -g node-inspector
 
