@@ -118,7 +118,7 @@ Type in expressions to have them evaluated.
 Type :help for more information.
 
 
-scala> val rides = spark.read.option("delimiter", ",").option("inferSchema", true).option("header", true).csv("file:///workdir/spark-3.0.1-bin-hadoop2.7-hive1.2/duocar/raw/rides/")
+scala> val rides = spark.read.option("delimiter", ",").option("inferSchema", true).option("header", true).csv("file:///workdir/spark-3.0.1-bin-hadoop2.7-hive1.2/spark-ml/duocar/raw/rides/")
 rides: org.apache.spark.sql.DataFrame = [id: int, driver_id: bigint ... 12 more fields]
 
 scala> rides.count()
