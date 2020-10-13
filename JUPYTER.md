@@ -14,7 +14,7 @@ The main requirement being to have a `REPL` (**R**ead **E**valuate **P**rint **L
 > Note: As such, all languages providing a REPL can potentially be supported by
 > Jupyter Notebooks. Among them Python, Java (9+), Scala, NodeJS, Groovy... an more. 
 
-Install Jupyter on the Raspberry Pi is easy:
+Installing Jupyter on Linux/Debian is easy:
 ```
  $ sudo pip3 install jupyter
 ```
@@ -30,6 +30,11 @@ sudo pip3 install jupyter
 sudo apt-get clean
 ```
 > See also the [Jupyter Installation](https://jupyter.org/install) guide.
+
+For Spark to work from the Python Notebooks:
+```
+pip3 install spark
+```
 
 The default language for Jupyter is Python. To have more languages available, you need to install what's called `kernels`.
 Java kernel, Scala kernel, etc.
