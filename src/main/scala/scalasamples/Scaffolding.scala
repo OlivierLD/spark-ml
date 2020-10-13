@@ -14,11 +14,9 @@ object Scaffolding {
     val spark: SparkSession = SparkSession.builder
                                           .appName("SimpleApp")
                                           .config("spark.master", "local")
+                                          .config("spark.driver.memory",  471859200)
+//                                          .config("spark.testing.memory", 2147480000)
                                           .getOrCreate
-    println(">> Changing memory parameters")
-    spark.conf.set("spark.testing.memory", 2147480000)
-    //                                     268435456
-    spark.conf.set("spark.driver.memory",  471859200)
 
     val rides: Dataset[Row] = spark.read
                                    .option("delimiter", ",")
