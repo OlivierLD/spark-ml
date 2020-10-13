@@ -102,6 +102,7 @@ RUN echo "echo -------------------------" >> $HOME/.bashrc
 #
 RUN echo "To run it, use 'docker run -it --rm -e USER=root -p 8080:8080 oliv-spark:latest /bin/bash'"
 
+WORKDIR /workdir/spark-3.0.1-bin-hadoop2.7-hive1.2
 RUN git clone https://github.com/OlivierLD/spark-ml.git
 # WORKDIR /workdir/spark-ml
 # RUN npm install

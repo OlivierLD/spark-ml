@@ -14,6 +14,10 @@ object Scaffolding {
                                           .appName("SimpleApp")
                                           .config("spark.master", "local")
                                           .getOrCreate
+    spark.conf.set("spark.testing.memory", 2147480000)
+    //                                     268435456
+    spark.conf.set("spark.driver.memory",  471859200)
+
     val rides: Dataset[Row] = spark.read
                                    .option("delimiter", ",")
                                    .option("inferSchema", true)
