@@ -60,7 +60,7 @@ spark = SparkSession.builder.appName("spark-test").getOrCreate()
 ```
 Then
 ```python
-FILE_LOCATION = "file:///workdir/spark-3.0.1-bin-hadoop2.7-hive1.2/duocar/raw/rides/"
+FILE_LOCATION = "file:///workdir/spark-3.0.1-bin-hadoop2.7-hive1.2/spark-ml/duocar/raw/rides/"
 rides = spark.read.csv(FILE_LOCATION, \
                        sep=",", \
                        header=True, \
@@ -91,7 +91,7 @@ root
 #### Same in Scala
 In `./bin/spark-shell`, run 
 ```scala
-val FILE_LOCATION = "file:///workdir/spark-3.0.1-bin-hadoop2.7-hive1.2/duocar/raw/rides/"
+val FILE_LOCATION = "file:///workdir/spark-3.0.1-bin-hadoop2.7-hive1.2/spark-ml/duocar/raw/rides/"
 val rides = spark.read
                  .option("delimiter", ",")
                  .option("inferSchema", true)
