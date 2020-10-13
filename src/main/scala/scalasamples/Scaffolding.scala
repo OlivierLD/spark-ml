@@ -14,6 +14,7 @@ object Scaffolding {
     val spark: SparkSession = SparkSession.builder
                                           .appName("SimpleApp")
                                           .config("spark.master", "local")
+                                          // Scala may complain about memory (Java does not...) The following 2 will fix that.
                                           .config("spark.driver.memory",  "471859200")
                                           .config("spark.testing.memory", "2147480000")
                                           .getOrCreate
