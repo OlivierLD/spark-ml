@@ -31,7 +31,7 @@ $ docker ps
 CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS                    NAMES
 df364841cbd9        oliv-spark:latest   "/bin/bash"         9 minutes ago       Up 9 minutes        0.0.0.0:8080->8080/tcp   vigorous_brown
 $
-$ docker cp ~/Desktop/.../sparkm-ml/duocar-raw-part-01.zip df364841cbd9:/workdir/spark-3.0.1-bin-hadoop2.7-hive1.2/ai-data.zip
+$ docker cp ~/Desktop/.../spark-ml/duocar-raw-part-01.zip df364841cbd9:/workdir/spark-3.0.1-bin-hadoop2.7-hive1.2/ai-data.zip
 $
 ```
 

@@ -80,7 +80,7 @@ RUN ./gradlew installKernel
 WORKDIR /workdir
 RUN curl -Lo coursier https://git.io/coursier-cli
 RUN chmod +x coursier
-RUN ./coursier launch --fork almond -- --install
+RUN ./coursier launch --fork almond --scala 2.12.12 -- --install
 RUN rm -f coursier
 #
 # To start: jupyter notebook --ip=0.0.0.0 --port=8080 --allow-root --no-browser
