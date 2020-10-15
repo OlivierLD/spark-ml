@@ -30,7 +30,7 @@ ENV SPARK_TARBALL $APACHE_MIRROR/spark-3.0.1-bin-hadoop2.7-hive1.2.tgz
 
 RUN apt-get update
 RUN apt-get install -y sysvbanner
-RUN apt-get install -y curl git build-essential default-jdk libssl-dev libffi-dev python-dev vim
+RUN apt-get install -y curl git build-essential default-jdk libssl-dev libffi-dev python-dev vim zip
 RUN apt-get install -y python-pip python-dev
 RUN apt-get install -y python3-pip python3-dev python3-venv
 RUN pip3 install pandas numpy scipy scikit-learn
@@ -44,7 +44,7 @@ RUN pip3 install pyspark
 #
 RUN apt-get install -y python-opencv
 RUN apt-get install -y python3-tk
-
+#
 RUN echo "+-----------------------+"  && \
 	echo "| ===> installing Scala |"  && \
 	echo "+-----------------------+"  && \
@@ -54,7 +54,9 @@ RUN echo "+-----------------------+"  && \
     dpkg -i scala.deb && \
     echo "===> Cleaning up..."  && \
     rm -f *.deb
-
+#
+RUN sdk install sbt
+#
 RUN mkdir /workdir
 WORKDIR /workdir
 RUN echo "+-----------------------+" && \
@@ -65,7 +67,7 @@ RUN echo "+-----------------------+" && \
     tar xvf spark.tgz && \
     echo "===> Cleaning up..." && \
     rm spark.tgz
-
+#
 # TODO Hive, Hadoop, etc?
 #
 # Jupyter Notebooks kernels: IJava, Almond
@@ -81,16 +83,23 @@ WORKDIR /workdir
 RUN curl -Lo coursier https://git.io/coursier-cli
 RUN chmod +x coursier
 # The Scala version is important, it will be part of the name of some resources (in the Scala Notebooks)
-RUN ./coursier launch --fork almond --scala 2.12.12 -- --install
+RUN ./coursier launch --fork almond --scala $SCALA_VERSION -- --install
 RUN rm -f coursier
 #
 # To start: jupyter notebook --ip=0.0.0.0 --port=8080 --allow-root --no-browser
 #
+# SDK, for SBT and others
+RUN curl -s "https://get.sdkman.io" | bash
+#
+RUN source "$HOME/.sdkman/bin/sdkman-init.sh"
+#
 RUN echo "alias ll='ls -lisah'" >> $HOME/.bashrc
 RUN echo "banner Spark" >> $HOME/.bashrc
+RUN echo "sdk version" >> $HOME/.bashrc
 RUN echo "git --version" >> $HOME/.bashrc
 RUN echo "java -version" >> $HOME/.bashrc
 RUN echo "scala -version" >> $HOME/.bashrc
+# RUN echo "sbt -version" >> $HOME/.bashrc
 RUN echo "echo ---- To Test your Spark Install -----" >> $HOME/.bashrc
 RUN echo "echo From /workdir, cd spark-3.0.1-bin-hadoop2.7-hive1.2" >> $HOME/.bashrc
 RUN echo "echo Then ./bin/spark-shell " >> $HOME/.bashrc
@@ -99,13 +108,14 @@ RUN echo "echo or ./bin/run-example org.apache.spark.examples.SparkPi" >> $HOME/
 RUN echo "echo -------------------------------------" >> $HOME/.bashrc
 RUN echo "echo To start Jupyter Notebooks:" >> $HOME/.bashrc
 RUN echo "echo jupyter notebook --ip=0.0.0.0 --port=8080 --allow-root --no-browser" >> $HOME/.bashrc
+RUN echo "echo ... and look for the the token." >> $HOME/.bashrc
 RUN echo "echo -------------------------------------" >> $HOME/.bashrc
 #
 RUN echo "To run it, use 'docker run -it --rm -e USER=root -p 8080:8080 oliv-spark:latest /bin/bash'"
-
+#
 WORKDIR /workdir/spark-3.0.1-bin-hadoop2.7-hive1.2
 RUN git clone https://github.com/OlivierLD/spark-ml.git
-# WORKDIR /workdir/spark-ml
+# WORKDIR /workdir/spark-3.0.1-bin-hadoop2.7-hive1.2/spark-ml
 # RUN npm install
 # RUN npm install -g node-inspector
 
