@@ -29,10 +29,12 @@ tasks.withType(JavaCompile) {
 }
 
 dependencies {
-    // https://mvnrepository.com/artifact/org.apache.spark/spark-core
-    compile group: 'org.apache.spark', name: 'spark-core_2.12', version: '3.0.1'
     // https://mvnrepository.com/artifact/org.apache.spark/spark-sql
     compile group: 'org.apache.spark', name: 'spark-sql_2.12', version: '3.0.1'
+    // https://mvnrepository.com/artifact/org.apache.spark/spark-mllib
+    runtime group: 'org.apache.spark', name: 'spark-mllib_2.12', version: '3.0.1'
+    // https://mvnrepository.com/artifact/org.apache.spark/spark-core
+    compile group: 'org.apache.spark', name: 'spark-core_2.12', version: '3.0.1'
 }
 
 repositories {
