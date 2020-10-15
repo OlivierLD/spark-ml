@@ -43,6 +43,8 @@ $ unzip ai-data.zip
 ```
 
 ## Basic validations
+We just want here to validate the Spark basics (availability).
+
 In the docker container, do the following:
 
 #### In Python3

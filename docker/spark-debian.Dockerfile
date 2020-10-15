@@ -68,7 +68,7 @@ RUN echo "+-----------------------+" && \
 
 # TODO Hive, Hadoop, etc?
 #
-# Jupyter Notebooks kernels: IJava, Almond?
+# Jupyter Notebooks kernels: IJava, Almond
 # See https://github.com/SpencerPark/IJava, https://github.com/SpencerPark/IJava#install-from-source
 #
 WORKDIR /workdir
@@ -80,6 +80,7 @@ RUN ./gradlew installKernel
 WORKDIR /workdir
 RUN curl -Lo coursier https://git.io/coursier-cli
 RUN chmod +x coursier
+# The Scala version is important, it will be part of the name of some resources (in the Scala Notebooks)
 RUN ./coursier launch --fork almond --scala 2.12.12 -- --install
 RUN rm -f coursier
 #
@@ -90,15 +91,15 @@ RUN echo "banner Spark" >> $HOME/.bashrc
 RUN echo "git --version" >> $HOME/.bashrc
 RUN echo "java -version" >> $HOME/.bashrc
 RUN echo "scala -version" >> $HOME/.bashrc
-RUN echo "echo -------------------------" >> $HOME/.bashrc
-RUN echo "echo From /workdir, cd spark*" >> $HOME/.bashrc
+RUN echo "echo ---- To Test your Spark Install -----" >> $HOME/.bashrc
+RUN echo "echo From /workdir, cd spark-3.0.1-bin-hadoop2.7-hive1.2" >> $HOME/.bashrc
 RUN echo "echo Then ./bin/spark-shell " >> $HOME/.bashrc
 RUN echo "echo as well as ./bin/pyspark " >> $HOME/.bashrc
 RUN echo "echo or ./bin/run-example org.apache.spark.examples.SparkPi" >> $HOME/.bashrc
-RUN echo "echo -------------------------" >> $HOME/.bashrc
+RUN echo "echo -------------------------------------" >> $HOME/.bashrc
 RUN echo "echo To start Jupyter Notebooks:" >> $HOME/.bashrc
 RUN echo "echo jupyter notebook --ip=0.0.0.0 --port=8080 --allow-root --no-browser" >> $HOME/.bashrc
-RUN echo "echo -------------------------" >> $HOME/.bashrc
+RUN echo "echo -------------------------------------" >> $HOME/.bashrc
 #
 RUN echo "To run it, use 'docker run -it --rm -e USER=root -p 8080:8080 oliv-spark:latest /bin/bash'"
 
