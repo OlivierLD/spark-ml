@@ -16,13 +16,13 @@ public class Regression {
 
     private final static String RIDES_PATH = String.format("file://%s/duocar/clean/rides", System.getProperty("user.dir"));
 
-    private static double[] rddToDoubleIntArray(JavaRDD<Row> jRdd) {
+    private static double[] rddIntToDoubleArray(JavaRDD<Row> jRdd) {
         JavaDoubleRDD javaDoubleRDD = jRdd.mapToDouble(d -> d.getInt(0));
         List<Double> doubleList = javaDoubleRDD.collect();
         double[] doubles = doubleList.stream().mapToDouble(d -> d).toArray();
         return doubles;
     }
-    private static double[] rddToDoubleDoubleArray(JavaRDD<Row> jRdd) {
+    private static double[] rddDoubleToDoubleArray(JavaRDD<Row> jRdd) {
         JavaDoubleRDD javaDoubleRDD = jRdd.mapToDouble(d -> d.getDouble(0));
         List<Double> doubleList = javaDoubleRDD.collect();
         double[] doubles = doubleList.stream().mapToDouble(d -> d).toArray();
@@ -51,8 +51,8 @@ public class Regression {
             sample = regressionData;
         }
 
-        double[] x = rddToDoubleIntArray(sample.select("distance").javaRDD());
-        double[] y = rddToDoubleIntArray(regressionData.select("duration").javaRDD());
+        double[] x = rddIntToDoubleArray(sample.select("distance").javaRDD());
+        double[] y = rddIntToDoubleArray(regressionData.select("duration").javaRDD());
         PlotUtil.plot(x, y, "Distances", "Durations", "Regression - 1");
 
         VectorAssembler assembler = new VectorAssembler()
@@ -73,17 +73,22 @@ public class Regression {
         double intercept = model.intercept();
         Vector coefficients = model.coefficients();
         double[] coeffs = coefficients.toArray();
-
-        // TODO Display the above
+        System.out.println("Intercept:" + intercept);
+        System.out.println(String.format("-- %d Coefficient(s): --", coeffs.length));
+        for (double d : coeffs) {
+            System.out.println(d);
+        }
+        System.out.println("-----------------------");
 
         // ...
 
+        // Applying the model, making predictions
         Dataset<Row> predictions = model.transform(randomSplit[1]);
         predictions.printSchema();
         predictions.show(5);
 
-        double[] xPred = rddToDoubleIntArray(predictions.select("distance").javaRDD());
-        double[] yPred = rddToDoubleDoubleArray(predictions.select("prediction").javaRDD());
+        double[] xPred = rddIntToDoubleArray(predictions.select("distance").javaRDD());
+        double[] yPred = rddDoubleToDoubleArray(predictions.select("prediction").javaRDD());
         PlotUtil.plot(xPred, yPred, "Distances", "Durations", "Regression - 2");
 
         System.out.println("Done!");
