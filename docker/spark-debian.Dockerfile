@@ -60,7 +60,7 @@ RUN echo "+-----------------------+"  && \
     echo "===> Cleaning up..."  && \
     rm -f *.deb
 #
-RUN sdk install sbt
+# RUN sdk install sbt
 #
 RUN mkdir /workdir
 WORKDIR /workdir
@@ -100,6 +100,8 @@ RUN echo "git --version" >> $HOME/.bashrc
 RUN echo "java -version" >> $HOME/.bashrc
 RUN echo "scala -version" >> $HOME/.bashrc
 # RUN echo "sbt -version" >> $HOME/.bashrc
+RUN echo "echo ---- If SBT is needed -----" >> $HOME/.bashrc
+RUN echo "echo Run 'sdk install sbt'" >> $HOME/.bashrc
 RUN echo "echo ---- To Test your Spark Install -----" >> $HOME/.bashrc
 RUN echo "echo From /workdir, cd spark-3.0.1-bin-hadoop2.7-hive1.2" >> $HOME/.bashrc
 RUN echo "echo Then ./bin/spark-shell " >> $HOME/.bashrc
