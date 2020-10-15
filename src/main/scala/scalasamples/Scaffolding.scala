@@ -28,5 +28,6 @@ object Scaffolding {
     rides.printSchema()
 
     spark.close()
+    println("Done!")
   }
 }

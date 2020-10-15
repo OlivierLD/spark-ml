@@ -45,6 +45,11 @@ RUN pip3 install pyspark
 RUN apt-get install -y python-opencv
 RUN apt-get install -y python3-tk
 #
+# SDK, for SBT and others
+RUN curl -s "https://get.sdkman.io" | bash
+#
+RUN /bin/bash "$HOME/.sdkman/bin/sdkman-init.sh"
+#
 RUN echo "+-----------------------+"  && \
 	echo "| ===> installing Scala |"  && \
 	echo "+-----------------------+"  && \
@@ -87,11 +92,6 @@ RUN ./coursier launch --fork almond --scala $SCALA_VERSION -- --install
 RUN rm -f coursier
 #
 # To start: jupyter notebook --ip=0.0.0.0 --port=8080 --allow-root --no-browser
-#
-# SDK, for SBT and others
-RUN curl -s "https://get.sdkman.io" | bash
-#
-RUN source "$HOME/.sdkman/bin/sdkman-init.sh"
 #
 RUN echo "alias ll='ls -lisah'" >> $HOME/.bashrc
 RUN echo "banner Spark" >> $HOME/.bashrc
