@@ -20,23 +20,22 @@ import javax.swing.*;
 public class PlotUtil {
 
     public static void plot(double[] features, double[] labels, String xLabel, String yLabels, String graphLabel) {
+        assert(features != null && labels != null && features.length == labels.length);
         XYSeriesCollection dataset = new XYSeriesCollection();
-        XYSeries series = new XYSeries(" Data");
+        XYSeries series = new XYSeries("Data");
         for (int i=0; i<features.length; i++) {
             series.add(features[i], labels[i]);
         }
         dataset.addSeries(series);
-
         final JFreeChart chart = ChartFactory.createScatterPlot(
                 graphLabel,
                 xLabel,
                 yLabels,
                 dataset);
-
         final ChartPanel panel = new ChartPanel(chart);
         final JFrame f = new JFrame();
         f.add(panel);
-        f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        f.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         f.pack();
         f.setVisible(true);
     }
