@@ -53,7 +53,7 @@ public class Regression {
 
         double[] x = rddIntToDoubleArray(sample.select("distance").javaRDD());
         double[] y = rddIntToDoubleArray(regressionData.select("duration").javaRDD());
-        PlotUtil.plot(x, y, "Distances", "Durations", "Regression - 1");
+        PlotUtil.plot(x, y, "Distances (m)", "Durations (s)", "Regression - before");
 
         VectorAssembler assembler = new VectorAssembler()
                 .setInputCols(new String[] {"distance"})
@@ -89,7 +89,7 @@ public class Regression {
 
         double[] xPred = rddIntToDoubleArray(predictions.select("distance").javaRDD());
         double[] yPred = rddDoubleToDoubleArray(predictions.select("prediction").javaRDD());
-        PlotUtil.plot(xPred, yPred, "Distances", "Durations", "Regression - 2");
+        PlotUtil.plot(xPred, yPred, "Distances (n)", "Durations (s)", "Regression - after");
 
         System.out.println("Done!");
         spark.close();
