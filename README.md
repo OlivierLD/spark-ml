@@ -9,7 +9,11 @@ You will find here:
     - Java
     - Scala
     - Jupyter notebooks server (for Python3, Java, Scala)
-    - This project
+    - This project, with
+        - Jupyter Notebooks, for Python3, Java, Scala
+        - Java code
+        - Python3 code
+        - Scala code
 - All the resources of this project will be runnable in the docker image built above.     
 
 ## Cloudera - Spark class, Oct-2020
@@ -161,6 +165,7 @@ Good!
 ## Other resources and docs
 - [JUPYTER.md](./JUPYTER.md)
 - [SPARK_DEBIAN.md](./SPARK_DEBIAN.md)
+- Good Java-Spark examples [here](https://www.programcreek.com/java-api-examples/?code=IsaacChanghau%2FStockPrediction%2FStockPrediction-master%2Fsrc%2Fmain%2Fjava%2Fcom%2Fisaac%2Fstock%2Futils%2FDataPreview.java#)
 
 ---
  
