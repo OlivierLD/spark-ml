@@ -37,6 +37,7 @@ dependencies {
     compile group: 'org.apache.spark', name: 'spark-core_2.12', version: '3.0.1'
     // Graph ?
     compile group: 'org.jfree', name: 'jfreechart', version: '1.5.0'
+    compile group: 'org.knowm.xchart', name: 'xchart', version: '3.6.5'
 }
 
 repositories {

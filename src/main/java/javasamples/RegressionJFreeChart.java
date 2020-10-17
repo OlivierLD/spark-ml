@@ -12,7 +12,10 @@ import org.apache.spark.ml.feature.VectorAssembler;
 
 import java.util.List;
 
-public class Regression {
+/**
+ * Graphics with JFreeChart
+ */
+public class RegressionJFreeChart {
 
     private final static String RIDES_PATH = String.format("file://%s/duocar/clean/rides", System.getProperty("user.dir"));
 
