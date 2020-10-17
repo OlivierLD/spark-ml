@@ -15,10 +15,13 @@ import org.knowm.xchart.XYChartBuilder;
 import org.knowm.xchart.XYSeries;
 import org.knowm.xchart.style.Styler;
 
+import java.awt.*;
+import java.util.Arrays;
 import java.util.List;
 
 /**
  * Graphics with XChart
+ * See https://knowm.org/open-source/xchart/xchart-example-code/
  */
 public class RegressionXChart {
 
@@ -35,8 +38,26 @@ public class RegressionXChart {
         return doubleList;
     }
 
-    public static void plot(List<Double> xData, List<Double> yData) {
-        XYChart chart = new XYChartBuilder()
+    private static class PlotData {
+        List<Double> xData;
+        List<Double> yData;
+        String plotLabel;
+        public PlotData xData(List<Double> xData) {
+            this.xData = xData;
+            return this;
+        }
+        public PlotData yData(List<Double> yData) {
+            this.yData = yData;
+            return this;
+        }
+        public PlotData plotLabel(String plotLabel) {
+            this.plotLabel = plotLabel;
+            return this;
+        }
+    }
+
+    public static void plot(List<PlotData> plotData) {
+        final XYChart chart = new XYChartBuilder()   // Also try QuickChart
                 .width(800)
                 .height(600)
                 .build();
@@ -45,7 +66,11 @@ public class RegressionXChart {
         chart.getStyler().setChartTitleVisible(false);
         chart.getStyler().setLegendPosition(Styler.LegendPosition.InsideNW);
         chart.getStyler().setMarkerSize(8);
-        chart.addSeries("Distance vs Duration", xData, yData);
+        chart.getStyler().setSeriesColors(new Color[] { Color.RED, Color.BLACK, Color.CYAN }); // Warning: May need more elements...
+        plotData.stream().forEach(plot -> {
+            chart.addSeries(plot.plotLabel, plot.xData, plot.yData);
+        });
+//        chart.addSeries("Distance vs Duration", xData, yData);
         new SwingWrapper<XYChart>(chart).displayChart();
     }
 
@@ -74,7 +99,11 @@ public class RegressionXChart {
         List<Double> x = rddIntToDoubleArray(sample.select("distance").javaRDD());
         List<Double> y = rddIntToDoubleArray(regressionData.select("duration").javaRDD());
 
-        plot(x, y); // , "Distances (m)", "Durations (s)", "Regression - before");
+        List<PlotData> plotData = Arrays.asList(new PlotData[] { new PlotData()
+                .plotLabel("Duration vs Distance")
+                .xData(x)
+                .yData(y) });
+        plot(plotData); // , "Distances (m)", "Durations (s)", "Regression - before");
 
         VectorAssembler assembler = new VectorAssembler()
                 .setInputCols(new String[] {"distance"})
@@ -110,7 +139,18 @@ public class RegressionXChart {
 
         List<Double> xPred = rddIntToDoubleArray(predictions.select("distance").javaRDD());
         List<Double> yPred = rddDoubleToDoubleArray(predictions.select("prediction").javaRDD());
-        plot(xPred, yPred); // , "Distances (n)", "Durations (s)", "Regression - after");
+
+        List<PlotData> plotData2 = Arrays.asList(
+                new PlotData[]{
+                        new PlotData()
+                                .plotLabel("Duration vs Distance")
+                                .xData(x)
+                                .yData(y),
+                        new PlotData()
+                                .plotLabel("Prediction")
+                                .xData(xPred)
+                                .yData(yPred)});
+        plot(plotData2);
 
         System.out.println("Done!");
         spark.close();
