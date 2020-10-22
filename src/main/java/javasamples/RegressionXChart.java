@@ -75,6 +75,7 @@ public class RegressionXChart {
     }
 
     public static void main(String... args) {
+        System.out.println(String.format("Running Java version [%s]", System.getProperty("java.version")));
         SparkSession spark = SparkSession.builder()
                 .appName("regress")
                 .config("spark.master", "local")

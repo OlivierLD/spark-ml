@@ -9,7 +9,13 @@ import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
 import org.apache.spark.ml.feature.VectorAssembler;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
 
+import javax.swing.*;
 import java.util.List;
 
 /**
@@ -18,6 +24,27 @@ import java.util.List;
 public class RegressionJFreeChart {
 
     private final static String RIDES_PATH = String.format("file://%s/duocar/clean/rides", System.getProperty("user.dir"));
+
+    public static void plot(double[] features, double[] labels, String xLabel, String yLabels, String graphLabel) {
+        assert(features != null && labels != null && features.length == labels.length);
+        XYSeriesCollection dataset = new XYSeriesCollection();
+        XYSeries series = new XYSeries("Data");
+        for (int i=0; i<features.length; i++) {
+            series.add(features[i], labels[i]);
+        }
+        dataset.addSeries(series);
+        final JFreeChart chart = ChartFactory.createScatterPlot(
+                graphLabel,
+                xLabel,
+                yLabels,
+                dataset);
+        final ChartPanel panel = new ChartPanel(chart);
+        final JFrame f = new JFrame();
+        f.add(panel);
+        f.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        f.pack();
+        f.setVisible(true);
+    }
 
     private static double[] rddIntToDoubleArray(JavaRDD<Row> jRdd) {
         JavaDoubleRDD javaDoubleRDD = jRdd.mapToDouble(d -> d.getInt(0));
@@ -33,6 +60,7 @@ public class RegressionJFreeChart {
     }
 
     public static void main(String... args) {
+        System.out.println(String.format("Running Java version [%s]", System.getProperty("java.version")));
         SparkSession spark = SparkSession.builder()
                 .appName("regress")
                 .config("spark.master", "local")
@@ -56,7 +84,7 @@ public class RegressionJFreeChart {
 
         double[] x = rddIntToDoubleArray(sample.select("distance").javaRDD());
         double[] y = rddIntToDoubleArray(regressionData.select("duration").javaRDD());
-        PlotUtil.plot(x, y, "Distances (m)", "Durations (s)", "Regression - before");
+        plot(x, y, "Distances (m)", "Durations (s)", "Regression - before");
 
         VectorAssembler assembler = new VectorAssembler()
                 .setInputCols(new String[] {"distance"})
@@ -92,7 +120,7 @@ public class RegressionJFreeChart {
 
         double[] xPred = rddIntToDoubleArray(predictions.select("distance").javaRDD());
         double[] yPred = rddDoubleToDoubleArray(predictions.select("prediction").javaRDD());
-        PlotUtil.plot(xPred, yPred, "Distances (n)", "Durations (s)", "Regression - after");
+        plot(xPred, yPred, "Distances (n)", "Durations (s)", "Regression - after");
 
         System.out.println("Done!");
         spark.close();
