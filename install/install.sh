@@ -14,7 +14,6 @@ APACHE_MIRROR=https://mirrors.ocf.berkeley.edu/apache/spark/spark-3.0.1/
 SPARK_TARBALL=${APACHE_MIRROR}/spark-3.0.1-bin-hadoop2.7-hive1.2.tgz
 #
 sudo apt-get update
-sudo apt-get install -y sysvbanner
 sudo apt-get install -y curl git build-essential default-jdk libssl-dev libffi-dev python-dev vim zip
 sudo apt-get install -y python-pip python-dev
 sudo apt-get install -y python3-pip python3-dev python3-venv
@@ -45,8 +44,8 @@ sudo apt-get install -y --force-yes libjansi-java &&
 #
 # RUN sdk install sbt
 #
-mkdir /workdir
-cd /workdir
+mkdir -p ~/workdir
+cd ~/workdir
 echo "+-----------------------+" &&
 echo "| ===> installing Spark |" &&
 echo "+-----------------------+" &&
@@ -57,7 +56,7 @@ echo "+-----------------------+" &&
 #
 # TODO Hive, Hadoop, etc?
 #
-cd /workdir/spark-3.0.1-bin-hadoop2.7-hive1.2
+cd ~/workdir/spark-3.0.1-bin-hadoop2.7-hive1.2
 git clone https://github.com/OlivierLD/spark-ml.git
 #
 echo -e "Try that!"
