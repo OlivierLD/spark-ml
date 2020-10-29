@@ -36,11 +36,11 @@ sudo /bin/bash "$HOME/.sdkman/bin/sdkman-init.sh"
 echo "+-----------------------+"
 echo "| ===> installing Scala |"
 echo "+-----------------------+"
-sudo apt-get install -y --force-yes libjansi-java &&
-     curl -sSL $SCALA_TARBALL -o scala.deb &&
-     dpkg -i scala.deb &&
-     echo "===> Cleaning up..." &&
-     rm -f *.deb
+sudo apt-get install -y --force-yes libjansi-java
+sudo curl -sSL $SCALA_TARBALL -o scala.deb
+sudo dpkg -i scala.deb
+echo "===> Cleaning up..."
+sudo rm -f *.deb
 #
 # RUN sdk install sbt
 #
